@@ -4,6 +4,7 @@ class WhatsAppController {
 
         console.log('WhatsAppController OK');
 
+        this.elementsPrototype();
         this.loadElements();
 
     };//constructor
@@ -12,7 +13,7 @@ class WhatsAppController {
 
         this.el = {};
 
-        document.querySelectorAll(['id']).forEach(element=>{
+        document.querySelectorAll('[id]').forEach(element=>{
 
             this.el[Format.getCamelCase(element.id)] = element;
 
@@ -21,5 +22,22 @@ class WhatsAppController {
 
 
     };//load elements
+
+    elementsPrototype() {
+
+        Element.prototype.hide = function () {
+            this.style.display = 'none';
+        };//function hide
+
+        Element.prototype.show = function () {
+            this.style.display = 'block';
+        };//function show
+
+        Element.prototype.toggle = function () {
+            this.style.display = (this.style.display === 'none') ? 'block' : 'none';
+        };//function toggle
+
+
+    };//elements prototype
 
 };//class whatsapp controller 

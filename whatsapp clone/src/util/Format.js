@@ -4,7 +4,9 @@ class Format {
 
         let div = document.createElement('div');
 
-        div.innerHTML = `<div data-${text}></div>`
+        div.innerHTML = `<div data-${text}='id'></div>`;
+
+        return Object.keys(div.firstChild.dataset)[0];
 
     };//static get camel case
 
