@@ -184,29 +184,90 @@ class WhatsAppController {
 
         this.el.btnAttachPhoto.on('click', e=>{
 
-            console.log('photo')
+            this.el.inputPhoto.click();
 
         });//this el btn attach PHOTO
 
+        this.el.inputPhoto.on('change', e=>{
+
+            console.log(this.el.inputPhoto.files);
+
+            [...this.el.inputPhoto.files].forEach(file =>{
+
+                console.log(file);
+
+            });//each file
+
+        });//this el INPUT PHOTO CHANGE
+
         this.el.btnAttachCamera.on('click', e=>{
 
-            console.log('camera')
+            this.closeAllMainPanels();
+            this.el.panelCamera.addClass('open');
+            this.el.panelCamera.css({
+                height:'100%'
+            });
+
+        this.el.btnClosePanelCamera.on('click', e =>{
+
+            this.closeAllMainPanels();
+            this.el.panelMessagesContainer.show();
+
+        });//this el btn close panel camera
+
+        this.el.btnTakePicture.on('click', e=>{
+
+            console.log('take picture');
+
+        });//this el btn take picture
 
         });//this el btn attach CAMERA
 
         this.el.btnAttachDocument.on('click', e=>{
 
-            console.log('document')
+            this.closeAllMainPanels();
+            this.el.panelDocumentPreview.addClass('open');
+            this.el.panelDocumentPreview.css({
+                height:'100%'
+            });
 
         });//this el btn attach DOCUMENT
 
+        this.el.btnClosePanelDocumentPreview.on('click', e=>{
+
+            this.closeAllMainPanels();
+            this.el.panelMessagesContainer.show();
+
+        });// this el btn close panel document preview
+
+        this.el.btnSendDocument.on('click', e=>{
+
+            console.log('send document')
+
+        });//this el btn send document
+
         this.el.btnAttachContact.on('click', e=>{
 
-            console.log('contact')
+            this.el.modalContacts.show();
 
         });//this el btn attach CONTACT
 
+        this.el.btnCloseModalContacts.on('click', e =>{
+
+            this.el.modalContacts.hide();
+
+        });// this el btn close modal contacts
+
     };//init events
+
+    closeAllMainPanels(){
+
+        this.el.panelMessagesContainer.hide();
+        this.el.panelDocumentPreview.removeClass('open');
+        this.el.panelCamera.removeClass('open');
+
+
+    };//close all main panels
 
     closeMenuAttach(e) {
 
