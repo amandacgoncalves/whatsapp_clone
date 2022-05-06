@@ -221,6 +221,8 @@ class WhatsAppController {
 
         });//this el btn take picture
 
+        this._camera = new CameraController(this.el.videoCamera);
+
         });//this el btn attach CAMERA
 
         this.el.btnAttachDocument.on('click', e=>{
