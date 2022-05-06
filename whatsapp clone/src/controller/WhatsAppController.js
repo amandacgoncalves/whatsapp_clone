@@ -258,7 +258,98 @@ class WhatsAppController {
 
         });// this el btn close modal contacts
 
+        this.el.btnSendMicrophone.on('click', e =>{
+
+            this.el.recordMicrophone.show();
+            this.el.btnSendMicrophone.hide();
+            this.startRecordMicrophoneTime();
+
+        });//this el btn send microphone
+
+        this.el.btnCancelMicrophone.on('click', e=>{
+
+            this.closeRecordMicrophone();
+
+        });//this el btn cancel microphone
+
+        this.el.btnFinishMicrophone.on('click', e=>{
+
+            this.closeRecordMicrophone();
+
+        });//this el btn finish microphone
+
+        this.el.inputText.on('keypress', e=>{
+
+            if (e.key === 'Enter' && !e.ctrlKey) {
+
+                e.preventDefault();
+                this.el.btnSend.click();
+
+            }
+
+        });//this el input text key press
+
+        this.el.inputText.on('keyup', e=>{
+
+            if (this.el.inputText.innerHTML && this.el.inputText.innerHTML != '<br>') {
+
+                this.el.inputPlaceholder.hide();
+                this.el.btnSendMicrophone.hide();
+                this.el.btnSend.show();
+
+            } else {
+
+                this.el.inputPlaceholder.show();
+                this.el.btnSendMicrophone.show();
+                this.el.btnSend.hide();
+
+            }
+
+        });// this el input text
+
+        this.el.btnSend.on('click', e=>{
+
+            console.log(this.el.inputText.innerHTML);
+
+        });//this el btn send
+
+        this.el.btnEmojis.on('click', e=>{
+
+            this.el.panelEmojis.toggleClass('open');
+
+        });//this el btn emojis
+
+        this.el.panelEmojis.querySelectorAll('.emojik').forEach(emoji=>{
+
+            emoji.on('click', e=>{
+
+                console.log(emoji.dataset.unicode);
+
+            });
+
+        });
+
     };//init events
+
+    startRecordMicrophoneTime() {
+
+        let start = Date.now();
+
+        this._recordMicrophoneInterval = setInterval(()=>{
+
+            this.el.recordMicrophoneTimer.innerHTML = Format.toTime(Date.now() - start);
+
+        }, 100);
+
+    };//start record microphone time
+
+    closeRecordMicrophone() {
+
+        this.el.recordMicrophone.hide();
+        this.el.btnSendMicrophone.show();
+        clearInterval(this._recordMicrophoneInterval);
+
+    };//close record microphone
 
     closeAllMainPanels(){
 
