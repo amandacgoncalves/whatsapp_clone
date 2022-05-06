@@ -1,5 +1,6 @@
 import {Format} from './../util/Format';
 import {CameraController} from './CameraController';
+import {DocumentPreviewController} from './DocumentPreviewController';
 
 export class WhatsAppController {
 
@@ -215,12 +216,20 @@ export class WhatsAppController {
 
             this.closeAllMainPanels();
             this.el.panelMessagesContainer.show();
+            this._camera.stop();
 
         });//this el btn close panel camera
 
         this.el.btnTakePicture.on('click', e=>{
 
-            console.log('take picture');
+            let dataUrl = this._camera.takePicture();
+
+            this.el.pictureCamera.src = dataUrl;
+            this.el.pictureCamera.show();
+            this.el.videoCamera.hide();
+            this.el.btnReshootPanelCamera.show();
+            this.el.containerTakePicture.hide();
+            this.el.containerSendPicture.show();
 
         });//this el btn take picture
 
@@ -228,15 +237,55 @@ export class WhatsAppController {
 
         });//this el btn attach CAMERA
 
+        this.el.btnReshootPanelCamera.on('click', e=>{
+
+            this.el.pictureCamera.hide();
+            this.el.videoCamera.show();
+            this.el.btnReshootPanelCamera.hide();
+            this.el.containerTakePicture.show();
+            this.el.containerSendPicture.hide();
+
+        });//this el btn reshoot panel camera
+
+        this.el.btnSendPicture.on('click', e=>{
+
+            console.log(this.el.pictureCamera.src)
+
+        });//this el btn send picture
+
         this.el.btnAttachDocument.on('click', e=>{
 
             this.closeAllMainPanels();
             this.el.panelDocumentPreview.addClass('open');
             this.el.panelDocumentPreview.css({
                 height:'100%'
-            });
+            });//thus close all main panels
+
+            this.el.inputDocument.click();
 
         });//this el btn attach DOCUMENT
+
+        this.el.inputDocument.on('change', e=>{
+
+            if (this.el.inputDocument.files.length) {
+
+                let file = this.el.inputDocument.files[0];
+
+                this._documentPreviewController = new DocumentPreviewController(file)
+
+                this._documentPreviewController.getPreviewData().then(data=>{
+
+                    console.log('ok', data);
+
+                }).catch(err => {
+
+                    console.log('err', err);
+
+                });
+
+            }
+
+        });// this el input document
 
         this.el.btnClosePanelDocumentPreview.on('click', e=>{
 
