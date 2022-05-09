@@ -1,5 +1,6 @@
 import {Format} from './../util/Format';
 import {CameraController} from './CameraController';
+import {MicrophoneController} from './MicrophoneController';
 import {DocumentPreviewController} from './DocumentPreviewController';
 
 export class WhatsAppController {
@@ -269,6 +270,10 @@ export class WhatsAppController {
 
             if (this.el.inputDocument.files.length) {
 
+                this.el.panelDocumentPreview.css({
+                    height:'1%'
+                });
+
                 let file = this.el.inputDocument.files[0];
 
                 this._documentPreviewController = new DocumentPreviewController(file)
@@ -279,8 +284,18 @@ export class WhatsAppController {
                     this.el.infoPanelDocumentPreview.innerHTML = result.info;
                     this.el.imagePanelDocumentPreview.show();
                     this.el.filePanelDocumentPreview.hide();
+                    this.el.panelDocumentPreview.css({
+                        height:'100%'
+                    });
+
+
 
                 }).catch(err => {
+                    
+                    this.el.panelDocumentPreview.css({
+                    height:'100%'
+                });
+
 
                     console.log(file.type)
 
@@ -345,16 +360,20 @@ export class WhatsAppController {
             this.el.btnSendMicrophone.hide();
             this.startRecordMicrophoneTime();
 
+            this._microphoneController = new MicrophoneController();
+
         });//this el btn send microphone
 
         this.el.btnCancelMicrophone.on('click', e=>{
 
+            this._microphoneController.stop();
             this.closeRecordMicrophone();
 
         });//this el btn cancel microphone
 
         this.el.btnFinishMicrophone.on('click', e=>{
 
+            this._microphoneController.stop();
             this.closeRecordMicrophone();
 
         });//this el btn finish microphone
