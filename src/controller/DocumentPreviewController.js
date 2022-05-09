@@ -1,3 +1,5 @@
+const pdfjsLib = require ('pdfjs-dist');
+
 export class DocumentPreviewController {
 
     constructor (file) {
@@ -19,7 +21,10 @@ export class DocumentPreviewController {
                 let reader = new FileReader();
                 reader.onload = e => {
 
-                    s(reader.result);
+                    s({
+                        src: reader.result,
+                        info: this._file.name
+                    });
 
                 }
                 reader.onerror = e => {
@@ -27,7 +32,7 @@ export class DocumentPreviewController {
                     f(e);
 
                 }
-                reader.readAsDataUrl(this._file);
+                reader.readAsDataURL(this._file);
                 break;
 
                 case 'application/pdf':
