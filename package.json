@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/amandacgoncalves/whatsapp_clone#readme",
   "dependencies": {
+    "@firebase/firestore": "^3.4.9",
+    "firebase": "^5.0.4",
     "pdfjs-dist": "^2.0.489",
     "webpack": "^3.1.0",
     "webpack-dev-server": "^2.5.1"
