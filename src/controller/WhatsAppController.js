@@ -4,6 +4,7 @@ import {MicrophoneController} from './MicrophoneController';
 import {DocumentPreviewController} from './DocumentPreviewController';
 import {Firebase} from './../util/Firebase';
 import { User } from '../model/User';
+import { Chat } from '../model/Chat';
 
 export class WhatsAppController {
 
@@ -135,6 +136,9 @@ export class WhatsAppController {
                 }//if contact photo
 
                 div.on('click', e =>{
+
+                    console.log('chatId', contact.chatId);
+
                     this.el.activeName.innerHTML = contact.name;
                     this.el.activeStatus.innerHTML = contact.status;
 
@@ -320,10 +324,24 @@ export class WhatsAppController {
 
             contact.on('datachange', data =>{
                 if(data.name) {
-                    this._user.addContact(contact).then(()=>{
-                        this.el.btnClosePanelAddContact.click();
-                        console.info('Contact added');
-                    });
+
+                    Chat.createIfNotExists(this._user.email, contact.email).then(chat =>{
+
+                        contact.chatId = chat.id;
+
+                        this._user.chatid = chat.id;
+
+                        contact.addContact(this._user);
+
+                        this._user.addContact(contact).then(()=>{
+
+                            this.el.btnClosePanelAddContact.click();
+                            console.info('Contact added');
+    
+                        });//this user add contact
+
+                    });//chat create
+
                 }/*if*/else {
                     console.error('User not found');
                 }//else
