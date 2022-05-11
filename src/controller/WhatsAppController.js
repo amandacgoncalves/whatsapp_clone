@@ -174,9 +174,16 @@ export class WhatsAppController {
                 display: 'flex'
             });//this el home
 
+            this.el.panelMessagesContainer.innerHTML = '';
+
             Message.getRef(this._contactActive.chatId).orderBy('timeStamp').onSnapshot(docs =>{
 
-                this.el.panelMessagesContainer.innerHTML = '';
+                let scrollTop = this.el.panelMessagesContainer.scrollTop;
+
+                let scrollTopMax = (this.el.panelMessagesContainer.scrollHeight -
+                this.el.panelMessagesContainer.offsetHeight);
+
+                let autoScroll = (scrollTop >= scrollTopMax);
 
                 docs.forEach( doc => {
                  
@@ -197,7 +204,18 @@ export class WhatsAppController {
                     
                     }//if
 
-                });
+                });//docs for each
+
+                if (autoScroll) {
+
+                    this.el.panelMessagesContainer.scrollTop = (this.el.panelMessagesContainer.scrollHeight -
+                    this.el.panelMessagesContainer.offsetHeight);
+
+                } else {
+
+                    this.el.panelMessagesContainer.scrollTop = scrollTop;
+
+                }
 
             });//message get ref docs
 
