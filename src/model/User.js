@@ -50,4 +50,14 @@ export class User extends Model {
 
     };//static find by email
 
+    addContact(contact) {
+
+    return User.getRef()
+        .doc(this.email)
+        .collection('contacts')
+        .doc(btoa(contact.email))
+        .set(contact.toJSON());
+
+    }//add contact
+
 };//export class
