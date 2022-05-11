@@ -24,4 +24,19 @@ export class Format {
 
     };//static to time
 
+    static dateToTime (date, locale = 'pt-BR') {
+
+        return date.toLocaleTimeString(this._locale, {
+            hours: '2-digit',
+            minutes: '2-digit'
+        })
+
+    }//static date to time
+
+    static timeStampToTime(timeStamp) {
+
+        return (timeStamp && typeof timeStamp.toDate === 'function') ? Format.dateToTime(timeStamp.toDate()) : '';
+
+    }//static time stamp to time
+
 };//class 
