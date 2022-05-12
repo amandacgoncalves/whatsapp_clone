@@ -133,7 +133,6 @@ export class WhatsAppController {
                     img.src = contact.photo;
                     img.show();
 
-                    console.log(img, contact.photo)
                 }//if contact photo
 
                 div.on('click', e =>{
@@ -308,6 +307,22 @@ export class WhatsAppController {
     };//elements prototype
 
     initEvents() {
+
+        this.el.inputSearchContacts.on('keyup', e=>{
+
+         if (this.el.inputSearchContacts.value.length > 0) {
+
+            this.el.inputSearchContactsPlaceholder.hide();
+
+         } else {
+
+            this.el.inputSearchContactsPlaceholder.show();
+
+         }//if and else
+
+         this._user.getContacts(this.el.inputSearchContacts.value);
+
+        });//this el input search contacts
 
         this.el.myPhoto.on('click', e => {
 
